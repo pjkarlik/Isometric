@@ -1,5 +1,5 @@
 import Block from './Block';
-
+import BlockStyle from './Block.less';
 /** Parent Render Class */
 export default class Render {
   constructor(element) {
@@ -20,9 +20,10 @@ export default class Render {
 
   renderLoop() {
     let counter = 0;
+    const size = parseInt(BlockStyle.size, 10);
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
-        const block = new Block(counter, x * 20, y * 20, this.perspective);
+        const block = new Block(counter, x * size, y * size, this.perspective);
         this.blocks.push(block);
         counter ++;
       }

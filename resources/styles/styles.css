@@ -29,30 +29,3 @@ body > * {
   transform: rotateX(65deg) rotateZ(45deg);
   transform-style: preserve-3d;
 }
-
-.cube,
-.cube:after,
-.cube:before {
-  content: '';
-  height: 20px;
-  position: absolute;
-  width: 20px;
-}
-.cube {
-  background-color: #CCC;
-  transform-style: preserve-3d;
-  transition: 300ms;
-}
-.cube:hover {
-  background: #FFF;
-}
-.cube:after {
-  background-color: #AAA;
-  transform: rotateX(-90deg) translateY(20px);
-  transform-origin: 100% 100%;
-}
-.cube:before {
-  background-color: #999;
-  transform: rotateY(90deg) translateX(20px);
-  transform-origin: 100% 0;
-}

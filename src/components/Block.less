@@ -1,0 +1,31 @@
+@size: 40px;
+.cube,
+.cube:after,
+.cube:before {
+  content: '';
+  height: @size;
+  position: absolute;
+  width: @size;
+}
+.cube {
+  background-color: #CCC;
+  transform-style: preserve-3d;
+  transition: 300ms;
+}
+.cube:hover {
+  background: #FFF;
+}
+.cube:after {
+  background-color: #AAA;
+  transform: rotateX(-90deg) translateY(@size);
+  transform-origin: 100% 100%;
+}
+.cube:before {
+  background-color: #999;
+  transform: rotateY(90deg) translateX(@size);
+  transform-origin: 100% 0;
+}
+
+:export {
+  size: @size;
+}

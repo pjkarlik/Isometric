@@ -1,5 +1,6 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const pkgInfo = require('./package.json');
 const { name, version, description } = pkgInfo;
@@ -34,6 +35,13 @@ const config = {
         include: [/resources/],
       },
       {
+        extractTextPlugin: true,
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract('style-loader',
+        'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!less',
+        { publicPath: '../' }),
+      },
+      {
         test: /\.(png|jpg)$/,
         loader: 'file',
       },
@@ -53,6 +61,7 @@ const config = {
     ],
   },
   plugins: [
+    new ExtractTextPlugin('style/style.css', { allChunks: true }),
     new HtmlWebpackPlugin({
       css: 'styles/styles.css',
       title: 'Isometrics',

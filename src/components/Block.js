@@ -1,3 +1,4 @@
+import BlockStyle from './Block.less';
 /** Block Element **/
 export default class Block {
   constructor(index, top, left, parent) {
@@ -11,7 +12,7 @@ export default class Block {
 
   createCube() {
     const cube = document.createElement('div');
-    cube.className = 'cube';
+    cube.className = BlockStyle.cube;
     cube.id = this.index;
     cube.setAttribute('style', `transform: translate(${this.top}px,${this.left}px)`);
     this.parent.appendChild(cube);
