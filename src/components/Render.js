@@ -11,7 +11,7 @@ export default class Render {
     this.cols = 5;
     this.blocks = [];
     this.element = element;
-    this.message = 'wxyz';
+    this.message = 'paul j karlik';
     this.perspective = this.createPerspective();
     this.renderLoop();
   }
