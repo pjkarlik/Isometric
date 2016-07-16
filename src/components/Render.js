@@ -1,12 +1,17 @@
 import Block from './Block';
 import BlockStyle from './Block.less';
+import getChar from './Alphabet';
+
 /** Parent Render Class */
 export default class Render {
   constructor(element) {
-    this.width = 10;
-    this.height = 10;
+    this.width = 20;
+    this.height = 5;
+    this.rows = 5;
+    this.cols = 5;
     this.blocks = [];
     this.element = element;
+    this.message = 'wxyz';
     this.perspective = this.createPerspective();
     this.renderLoop();
   }
@@ -19,13 +24,24 @@ export default class Render {
   }
 
   renderLoop() {
-    let counter = 0;
+    const message = this.message.split('').reverse();
+    let holder;
     const size = parseInt(BlockStyle.size, 10);
-    for (let x = 0; x < this.width; x++) {
-      for (let y = 0; y < this.height; y++) {
-        const block = new Block(counter, x * size, y * size, this.perspective);
-        this.blocks.push(block);
-        counter ++;
+    // Get half the size of the message to center text //
+    const offset = (size * 5) * message.length / 2;
+    for (let r = 0; r < message.length; r++) {
+      holder = getChar(message[r]);
+      // Current X for position of Character in message. size * 6 = rows + 1 //
+      const currentX = -offset + (size * 6) * r;
+      let counter = 0;
+      for (let y = 0; y < this.rows; y++) {
+        for (let x = 0; x < this.cols; x++) {
+          if (holder[counter] === 1) {
+            const block = new Block(counter, currentX - (x * size), (y * size), this.perspective);
+            this.blocks.push(block);
+          }
+          counter ++;
+        }
       }
     }
     // window.requestAnimationFrame(this.renderLoop);

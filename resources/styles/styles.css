@@ -24,8 +24,12 @@ body > * {
 
 .perspective {
   left: 50%;
-  top: 30%;
+  top: 50%;
   position: absolute;
   transform: rotateX(65deg) rotateZ(45deg);
   transform-style: preserve-3d;
+  transition: 300ms;
+}
+.perspective:hover {
+  transform: rotateX(65deg) rotateZ(90deg);
 }

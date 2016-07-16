@@ -1,4 +1,7 @@
-@size: 40px;
+@size: 10px;
+@colorTop: #1e7702;
+@colorLeft: #0c2f00;
+@colorRight: #32d000;
 .cube,
 .cube:after,
 .cube:before {
@@ -8,20 +11,17 @@
   width: @size;
 }
 .cube {
-  background-color: #CCC;
+  background-color: @colorTop;
   transform-style: preserve-3d;
   transition: 300ms;
 }
-.cube:hover {
-  background: #FFF;
-}
 .cube:after {
-  background-color: #AAA;
+  background-color: @colorLeft;
   transform: rotateX(-90deg) translateY(@size);
   transform-origin: 100% 100%;
 }
 .cube:before {
-  background-color: #999;
+  background-color: @colorRight;
   transform: rotateY(90deg) translateX(@size);
   transform-origin: 100% 0;
 }
