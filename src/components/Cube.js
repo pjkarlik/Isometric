@@ -29,11 +29,11 @@ export default class Cube {
     const thisY = y / this.grid;
     const thisZ = z / this.grid;
     const noise = simplexNoise(thisX, thisY, thisZ);
-    const myOpacity = Math.round(255 * noise); // * 0.1;
+    const myOpacity = Math.round(255 * noise); // * 0.01;
     const cube = document.getElementById(this.index);
     cube.setAttribute('style',
     `transform: translate3D(${this.x}px, ${this.y}px, ${this.z}px);` +
-    `opacity:${myOpacity}`
+    `opacity:${myOpacity};`
     );
   }
 }

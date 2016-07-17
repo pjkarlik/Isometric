@@ -24,7 +24,7 @@ body > * {
 
 .container {
   left: 50%;
-  top: 50%;
+  top: 40%;
   position: absolute;
   transform: rotateX(65deg) rotateZ(45deg);
   transform-style: preserve-3d;

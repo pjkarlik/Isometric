@@ -9,18 +9,57 @@ export default class BlockRender {
     this.height = 5;
     this.rows = 5;
     this.cols = 5;
+    this.angle = 45;
+    this.rotation = 65;
     this.blocks = [];
     this.element = element;
     this.message = 'paul j karlik';
     this.perspective = this.createPerspective();
+    this.changeAngle = this.changeAngle.bind(this);
+    document.addEventListener('keydown', this.changeAngle, false);
     this.renderLoop();
   }
 
   createPerspective() {
     const perspective = document.createElement('div');
     perspective.className = 'perspective';
+    perspective.id = 'perspective';
     this.element.appendChild(perspective);
     return perspective;
+  }
+  changeAngle(e) {
+    if (e.keyCode === 38) {
+      this.rotation += 10;
+      if (this.rotation > 90) {
+        this.rotation = 90;
+      }
+    }
+    if (e.keyCode === 40) {
+      this.rotation -= 10;
+      if (this.rotation < 0) {
+        this.rotation = 0;
+      }
+    }
+    if (e.keyCode === 37) {
+      this.angle += 10;
+      if (this.angle > 90) {
+        this.angle = 90;
+      }
+    }
+    if (e.keyCode === 39) {
+      this.angle -= 10;
+      if (this.angle < 0) {
+        this.angle = 0;
+      }
+    }
+    if (e.keyCode === 81) {
+      this.time -= 1;
+    }
+    if (e.keyCode === 87) {
+      this.time += 1;
+    }
+    document.getElementById('perspective').setAttribute('style',
+      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
   }
 
   renderLoop() {
