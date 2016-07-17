@@ -1,7 +1,7 @@
 @size: 20px;
-@colorTop: #d374f7;
-@colorLeft: #281898;
-@colorRight: #0674ca;
+@colorTop: #fbde00;
+@colorLeft: #791241;
+@colorRight: #fd4800;
 .cube,
 .cube:after,
 .cube:before {
@@ -9,6 +9,7 @@
   height: @size;
   position: absolute;
   width: @size;
+  backface-visibility: hidden;
 }
 .cube {
   background-color: @colorTop;
