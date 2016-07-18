@@ -2,7 +2,7 @@ import CubeStyle from './Cube.less';
 import simplexNoise from './simplexNoise';
 /** Block Element **/
 export default class Cube {
-  constructor(index, x, y, z, parent, grid) {
+  constructor(index, x, y, z, parent, grid, style) {
     this.index = index;
     this.y = y;
     this.x = x;
@@ -10,13 +10,14 @@ export default class Cube {
     this.grid = grid;
     this.parent = parent;
     this.index = index;
+    this.style = style || CubeStyle;
     this.createCube();
     this.updateCube(this.x, this.y, this.z);
   }
 
   createCube() {
     const cube = document.createElement('div');
-    cube.className = CubeStyle.cube;
+    cube.className = this.style.cube;
     cube.id = this.index;
     cube.setAttribute('style',
     `transform: translate3D(${this.x}px, ${this.y}px, ${this.z}px);`
@@ -29,7 +30,7 @@ export default class Cube {
     const thisY = y / this.grid;
     const thisZ = z / this.grid;
     const noise = simplexNoise(thisX, thisY, thisZ);
-    const myOpacity = Math.round(255 * noise); // * 0.01;
+    const myOpacity = Math.round(255 * noise);
     const cube = document.getElementById(this.index);
     cube.setAttribute('style',
     `transform: translate3D(${this.x}px, ${this.y}px, ${this.z}px);` +
