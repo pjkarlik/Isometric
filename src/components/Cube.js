@@ -1,5 +1,5 @@
 import CubeStyle from './Cube.less';
-import simplexNoise, { fastfloor }from './simplexNoise';
+import simplexNoise, { fastfloor } from './simplexNoise';
 /** Block Element **/
 export default class Cube {
   constructor(index, x, y, z, parent, grid, style) {
