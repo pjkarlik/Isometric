@@ -34,14 +34,10 @@ export default class Render {
     // Generate Cube Field //
     let counter = 0;
     const size = parseInt(CubeStyle.size, 10);
-    const centerX = (size * this.grid) / 2;
-    const centerY = (size * this.grid) / 2;
-    const centerZ = (size * this.grid) / 2;
     for (let r = 0; r < this.z; r++) {
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
-          const cube = new Cube(counter,
-            centerX - (x * size), centerY - (y * size), centerZ - (r * size), this.perspective, 100);
+          const cube = new Cube(counter, (x * size), (y * size), (r * size), this.perspective, 100);
           this.cubes.push(cube);
           counter ++;
         }
@@ -73,12 +69,6 @@ export default class Render {
         this.angle = 5;
       }
     }
-    if (e.keyCode === 81) {
-      this.time -= 1;
-    }
-    if (e.keyCode === 87) {
-      this.time += 1;
-    }
     document.getElementById('container').setAttribute('style',
       `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
   }
@@ -86,12 +76,12 @@ export default class Render {
     // Loop though Simplex Noise //
     let counter = 0;
     const size = parseInt(CubeStyle.size, 10) / 2;
-    this.time ++;
     for (let r = 0; r < this.z; r++) {
+      this.time += 1;
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           const cube = this.cubes[counter];
-          cube.updateCube((x * size), (y * size), (r * size) - this.time);
+          cube.updateCube((x * size), (y * size), (r * size) + this.time);
           counter ++;
         }
       }
