@@ -14,7 +14,7 @@ export default class Block {
   createCube() {
     const cube = document.createElement('div');
     cube.className = BlockStyle.cube;
-    cube.id = this.index;
+    cube.id = `block${this.index}`;
     cube.setAttribute('style', `transform: translate3D(${this.z}px, ${this.top}px, ${this.left}px)`);
     this.parent.appendChild(cube);
   }

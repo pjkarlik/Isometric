@@ -15,17 +15,30 @@ export default class BlockRender {
     this.element = element;
     this.message = 'paul j karlik';
     this.perspective = this.createPerspective();
+
     this.changeAngle = this.changeAngle.bind(this);
+    this.updatemessage = this.updatemessage.bind(this);
+
     document.addEventListener('keydown', this.changeAngle, false);
     this.renderLoop();
   }
 
   createPerspective() {
+    const textinput = document.createElement('input');
+    textinput.className = 'textinput';
+    textinput.id = 'textinput';
+    textinput.value = this.message;
+    textinput.addEventListener('change', () => { this.updatemessage(); }, false);
+    this.element.appendChild(textinput);
     const perspective = document.createElement('div');
     perspective.className = 'perspective';
     perspective.id = 'perspective';
     this.element.appendChild(perspective);
     return perspective;
+  }
+  updatemessage() {
+    this.message = document.getElementById('textinput').value;
+    this.renderLoop();
   }
   changeAngle(e) {
     if (e.keyCode === 38) {
@@ -64,6 +77,11 @@ export default class BlockRender {
 
   renderLoop() {
     const message = this.message.split('').reverse();
+    const parent = document.getElementById('perspective');
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+    }
+    this.blocks = [];
     let holder;
     const size = parseInt(BlockStyle.size, 10);
     // Get half the size of the message to center text //

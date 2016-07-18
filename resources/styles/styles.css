@@ -22,6 +22,20 @@ body > * {
   position: relative;
 }
 
+.textinput{
+  background: #0c2e56;
+  border: 1px solid #FFF;
+  border-radius: 6px;
+  color: #FFF;
+  font-size: 14px;
+  padding: 5px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  text-align: center;
+  transform: translate( -50%, -50%);
+  width: 150px;
+}
 .perspective,
 .container,
 .map {
