@@ -46,27 +46,27 @@ export default class Render {
   }
   changeAngle(e) {
     if (e.keyCode === 38) {
-      this.rotation += 10;
-      if (this.rotation > 85) {
-        this.rotation = 85;
+      this.rotation += 5;
+      if (this.rotation > 90) {
+        this.rotation = 90;
       }
     }
     if (e.keyCode === 40) {
-      this.rotation -= 10;
-      if (this.rotation < 5) {
-        this.rotation = 5;
+      this.rotation -= 5;
+      if (this.rotation < 0) {
+        this.rotation = 0;
       }
     }
     if (e.keyCode === 37) {
-      this.angle += 10;
-      if (this.angle > 85) {
-        this.angle = 85;
+      this.angle += 5;
+      if (this.angle > 90) {
+        this.angle = 90;
       }
     }
     if (e.keyCode === 39) {
-      this.angle -= 10;
-      if (this.angle < 5) {
-        this.angle = 5;
+      this.angle -= 5;
+      if (this.angle < 0) {
+        this.angle = 0;
       }
     }
     document.getElementById('container').setAttribute('style',
