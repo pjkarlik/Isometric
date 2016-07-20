@@ -1,7 +1,7 @@
-@size: 20px;
-@colorTop: #08a517;
-@colorRight: #6d5713;
-@colorLeft: #522101;
+@size: 30px;
+@colorTop: #00a8ff;
+@colorRight: #00e2ff;
+@colorLeft: #1c0254;
 .cube,
 .cube:after,
 .cube:before {
@@ -22,6 +22,30 @@
 }
 .cube:before {
   background-color: @colorRight;
+  transform: rotateY(90deg) translateX(@size);
+  transform-origin: 100% 0;
+}
+
+.back,
+.back:after,
+.back:before {
+  content: '';
+  height: @size;
+  position: absolute;
+  width: @size;
+}
+.back {
+  background-color: darken(@colorTop, 20%);
+  transform-style: preserve-3d;
+  transform: rotateX(-180deg) rotateZ(90deg) translateZ(@size);
+}
+.back:after {
+  background-color: darken(@colorRight, 20%);
+  transform: rotateX(-90deg) translateY(@size);
+  transform-origin: 100% 100%;
+}
+.back:before {
+  background-color: darken(@colorLeft, 20%);
   transform: rotateY(90deg) translateX(@size);
   transform-origin: 100% 0;
 }

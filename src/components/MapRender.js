@@ -1,4 +1,4 @@
-import Cube from './Cube';
+import Cube from './Cubic';
 import CubeStyle from './Cube2.less';
 
 /** Parent Render Class */
@@ -54,25 +54,25 @@ export default class Render {
     if (e.keyCode === 38) {
       this.rotation += 10;
       if (this.rotation > 90) {
-        this.rotation = 90;
+        // this.rotation = 90;
       }
     }
     if (e.keyCode === 40) {
       this.rotation -= 10;
       if (this.rotation < 0) {
-        this.rotation = 0;
+        // this.rotation = 0;
       }
     }
     if (e.keyCode === 37) {
       this.angle += 10;
       if (this.angle > 90) {
-        this.angle = 90;
+        // this.angle = 90;
       }
     }
     if (e.keyCode === 39) {
       this.angle -= 10;
       if (this.angle < 0) {
-        this.angle = 0;
+        // this.angle = 0;
       }
     }
     // if (e.keyCode === 65) {

@@ -4,7 +4,7 @@ import CubeStyle from './Cube.less';
 /** Parent Render Class */
 export default class Render {
   constructor(element) {
-    this.grid = 10;
+    this.grid = 9;
     this.rows = this.grid;
     this.cols = this.grid;
     this.z = this.grid;
@@ -26,6 +26,8 @@ export default class Render {
     const perspective = document.createElement('div');
     perspective.className = 'container';
     perspective.id = 'container';
+    perspective.setAttribute('style',
+      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
     this.element.appendChild(perspective);
     return perspective;
   }
@@ -34,10 +36,14 @@ export default class Render {
     // Generate Cube Field //
     let counter = 0;
     const size = parseInt(CubeStyle.size, 10);
+    const centerX = (size * this.grid) / 2;
+    const centerY = (size * this.grid) / 2;
+    const centerZ = (size * this.grid) / 2;
     for (let r = 0; r < this.z; r++) {
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
-          const cube = new Cube(counter, (x * size), (y * size), (r * size), this.perspective, 100);
+          const cube = new Cube(counter,
+            centerX - (x * size), centerY - (y * size), centerZ - (r * size), this.perspective, 100);
           this.cubes.push(cube);
           counter ++;
         }
@@ -45,29 +51,21 @@ export default class Render {
     }
   }
   changeAngle(e) {
-    if (e.keyCode === 38) {
-      this.rotation += 5;
-      if (this.rotation > 90) {
-        this.rotation = 90;
-      }
-    }
-    if (e.keyCode === 40) {
-      this.rotation -= 5;
-      if (this.rotation < 0) {
-        this.rotation = 0;
-      }
-    }
-    if (e.keyCode === 37) {
-      this.angle += 5;
-      if (this.angle > 90) {
-        this.angle = 90;
-      }
-    }
-    if (e.keyCode === 39) {
-      this.angle -= 5;
-      if (this.angle < 0) {
-        this.angle = 0;
-      }
+    switch (e.keyCode) {
+      case 38:
+        this.rotation += 5;
+        break;
+      case 40:
+        this.rotation -= 5;
+        break;
+      case 37:
+        this.angle += 5;
+        break;
+      case 39:
+        this.angle -= 5;
+        break;
+      default:
+        break;
     }
     document.getElementById('container').setAttribute('style',
       `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
@@ -86,6 +84,9 @@ export default class Render {
         }
       }
     }
-    window.requestAnimationFrame(this.renderLoop);
+    setTimeout(() => {
+      window.requestAnimationFrame(this.renderLoop);
+    }, 1000);
+    // window.requestAnimationFrame(this.renderLoop);
   }
 }
