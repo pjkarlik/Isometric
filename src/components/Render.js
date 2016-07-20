@@ -4,7 +4,7 @@ import CubeStyle from './Cube.less';
 /** Parent Render Class */
 export default class Render {
   constructor(element) {
-    this.grid = 9;
+    this.grid = 10;
     this.rows = this.grid;
     this.cols = this.grid;
     this.z = this.grid;
@@ -67,9 +67,8 @@ export default class Render {
       default:
         break;
     }
-    document.getElementById('container').setAttribute('style',
-      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
   }
+
   renderLoop() {
     // Loop though Simplex Noise //
     let counter = 0;
@@ -84,9 +83,11 @@ export default class Render {
         }
       }
     }
-    setTimeout(() => {
-      window.requestAnimationFrame(this.renderLoop);
-    }, 1000);
-    // window.requestAnimationFrame(this.renderLoop);
+    document.getElementById('container').setAttribute('style',
+      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
+    window.requestAnimationFrame(this.renderLoop);
+    // setTimeout(() => {
+    //   window.requestAnimationFrame(this.renderLoop);
+    // }, 300);
   }
 }
