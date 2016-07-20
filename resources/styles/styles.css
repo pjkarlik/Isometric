@@ -56,7 +56,3 @@ body > * {
   left: 50%;
   top: 70%;
 }
-
-.perspective:hover {
-  transform: rotateX(65deg) rotateZ(90deg);
-}

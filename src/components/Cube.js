@@ -8,6 +8,7 @@ export default class Cube {
     this.x = x;
     this.z = z || 0;
     this.grid = grid;
+    this.tick = 0;
     this.parent = parent;
     this.index = index;
     this.style = style || CubeStyle;
@@ -26,11 +27,12 @@ export default class Cube {
   }
 
   updateCube(x, y, z) {
+    this.tick += 15;
     const thisX = x / this.grid;
     const thisY = y / this.grid;
     const thisZ = z / this.grid;
     const noise = simplexNoise(thisX, thisY, thisZ);
-    const myOpacity = fastfloor(255 * noise);
+    const myOpacity = fastfloor(255 * noise) * 0.1;
     const cube = document.getElementById(this.index);
     cube.setAttribute('style',
     `transform: translate3D(${this.x}px, ${this.y}px, ${this.z}px);` +

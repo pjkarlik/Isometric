@@ -81,7 +81,7 @@ export default class Render {
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           const cube = this.cubes[counter];
-          cube.updateCube((x * size), (y * size), (r * size) - this.time);
+          cube.updateCube((x * size), (y * size), (r * size) + this.time);
           counter ++;
         }
       }
