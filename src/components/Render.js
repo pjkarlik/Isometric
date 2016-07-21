@@ -67,6 +67,8 @@ export default class Render {
       default:
         break;
     }
+    // document.getElementById('container').setAttribute('style',
+    //   `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
   }
 
   renderLoop() {
@@ -86,8 +88,5 @@ export default class Render {
     document.getElementById('container').setAttribute('style',
       `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
     window.requestAnimationFrame(this.renderLoop);
-    // setTimeout(() => {
-    //   window.requestAnimationFrame(this.renderLoop);
-    // }, 300);
   }
 }
