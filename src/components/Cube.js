@@ -8,7 +8,6 @@ export default class Cube {
     this.x = x;
     this.z = z || 0;
     this.grid = grid;
-    this.tick = 0;
     this.parent = parent;
     this.index = index;
     this.style = style || CubeStyle;

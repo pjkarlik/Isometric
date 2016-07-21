@@ -33,6 +33,8 @@ export default class BlockRender {
     const perspective = document.createElement('div');
     perspective.className = 'perspective';
     perspective.id = 'perspective';
+    perspective.setAttribute('style',
+      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
     this.element.appendChild(perspective);
     return perspective;
   }
@@ -41,35 +43,21 @@ export default class BlockRender {
     this.renderLoop();
   }
   changeAngle(e) {
-    if (e.keyCode === 38) {
-      this.rotation += 10;
-      if (this.rotation > 90) {
-        this.rotation = 90;
-      }
-    }
-    if (e.keyCode === 40) {
-      this.rotation -= 10;
-      if (this.rotation < 0) {
-        this.rotation = 0;
-      }
-    }
-    if (e.keyCode === 37) {
-      this.angle += 10;
-      if (this.angle > 90) {
-        this.angle = 90;
-      }
-    }
-    if (e.keyCode === 39) {
-      this.angle -= 10;
-      if (this.angle < 0) {
-        this.angle = 0;
-      }
-    }
-    if (e.keyCode === 81) {
-      this.time -= 1;
-    }
-    if (e.keyCode === 87) {
-      this.time += 1;
+    switch (e.keyCode) {
+      case 38:
+        this.rotation += 5;
+        break;
+      case 40:
+        this.rotation -= 5;
+        break;
+      case 37:
+        this.angle += 5;
+        break;
+      case 39:
+        this.angle -= 5;
+        break;
+      default:
+        break;
     }
     document.getElementById('perspective').setAttribute('style',
       `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
@@ -94,7 +82,7 @@ export default class BlockRender {
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
-            const block = new Block(counter, currentX - (x * size), (y * size), this.perspective);
+            const block = new Block(counter, this.perspective, BlockStyle, currentX - (x * size), (y * size));
             this.blocks.push(block);
           }
           counter ++;
