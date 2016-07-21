@@ -1,13 +1,14 @@
 /** Block Element **/
 export default class Block {
   constructor(index, parent, style, y, x, z) {
-    this.index = index;
     this.y = y;
     this.x = x;
     this.z = z || 0;
     this.style = style;
     this.parent = parent;
-    this.index = index;
+    this.index = `block${index}`;
+    this.createCube = this.createCube.bind(this);
+    this.updateCube = this.updateCube.bind(this);
     this.createCube();
   }
 
@@ -22,6 +23,8 @@ export default class Block {
     this.parent.appendChild(cube);
   }
 
-  updateCube() {
+  updateCube(x, y, z) {
+    const cube = document.getElementById(this.index);
+    cube.setAttribute('style', `transform: translate3D(${this.z + z}px, ${this.y + y}px, ${this.x + x}px)`);
   }
 }

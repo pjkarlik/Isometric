@@ -12,6 +12,7 @@ export default function getChar(letter) {
             1, 1, 1, 1, 1,
             0, 1, 0, 1, 0,
             0, 0, 1, 0, 0];
+
   data.a = [0, 1, 1, 1, 1,
             1, 0, 0, 0, 1,
             0, 1, 1, 1, 1,

@@ -11,16 +11,19 @@ export default class BlockRender {
     this.cols = 5;
     this.angle = 45;
     this.rotation = 65;
+    this.time = 0;
     this.blocks = [];
+    this.cache = '';
     this.element = element;
     this.message = 'paul j karlik';
     this.perspective = this.createPerspective();
 
     this.changeAngle = this.changeAngle.bind(this);
     this.updatemessage = this.updatemessage.bind(this);
-
+    this.generateMessage = this.generateMessage.bind(this);
+    this.renderLoop = this.renderLoop.bind(this);
     document.addEventListener('keydown', this.changeAngle, false);
-    this.renderLoop();
+    this.generateMessage();
   }
 
   createPerspective() {
@@ -39,8 +42,9 @@ export default class BlockRender {
     return perspective;
   }
   updatemessage() {
+    window.cancelAnimationFrame(this.renderLoop);
     this.message = document.getElementById('textinput').value;
-    this.renderLoop();
+    this.generateMessage();
   }
   changeAngle(e) {
     switch (e.keyCode) {
@@ -63,14 +67,16 @@ export default class BlockRender {
       `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
   }
 
-  renderLoop() {
+  generateMessage() {
     const message = this.message.split('').reverse();
+    this.cache = message;
     const parent = document.getElementById('perspective');
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
     }
     this.blocks = [];
     let holder;
+    let myIndex = 0;
     const size = parseInt(BlockStyle.size, 10);
     // Get half the size of the message to center text //
     const offset = (size * 5) * message.length / 2;
@@ -82,13 +88,36 @@ export default class BlockRender {
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
-            const block = new Block(counter, this.perspective, BlockStyle, currentX - (x * size), (y * size));
+            myIndex ++;
+            const block = new Block(myIndex, this.perspective, BlockStyle, currentX - (x * size), (y * size));
             this.blocks.push(block);
           }
           counter ++;
         }
       }
     }
-    // window.requestAnimationFrame(this.renderLoop);
+    this.renderLoop();
+  }
+
+  renderLoop() {
+    let myIndex = 0;
+    for (let r = 0; r < this.cache.length; r++) {
+      const holder = getChar(this.cache[r]);
+      this.time += 0.2;
+      const cosProp = 25 * Math.sin(((r * 20) + this.time) * Math.PI / 180);
+      const sinProp = 25 * Math.cos(((r * 20) + this.time) * Math.PI / 180);
+      let counter = 0;
+      for (let y = 0; y < this.rows; y++) {
+        for (let x = 0; x < this.cols; x++) {
+          if (holder[counter] === 1) {
+            const block = this.blocks[myIndex];
+            block.updateCube(0, sinProp, cosProp);
+            myIndex ++;
+          }
+          counter ++;
+        }
+      }
+    }
+    window.requestAnimationFrame(this.renderLoop);
   }
 }
