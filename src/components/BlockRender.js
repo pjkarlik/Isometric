@@ -9,13 +9,14 @@ export default class BlockRender {
     this.height = 5;
     this.rows = 5;
     this.cols = 5;
-    this.angle = 45;
-    this.rotation = 65;
+    this.rotX = 65;
+    this.rotY = 0;
+    this.rotZ = 115;
     this.time = 0;
     this.blocks = [];
     this.cache = '';
     this.element = element;
-    this.message = 'paul j karlik';
+    this.message = 'nucleus';
     this.perspective = this.createPerspective();
 
     this.changeAngle = this.changeAngle.bind(this);
@@ -37,7 +38,7 @@ export default class BlockRender {
     perspective.className = 'perspective';
     perspective.id = 'perspective';
     perspective.setAttribute('style',
-      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
+      `transform: rotateX(${this.rotX}deg) rotateZ(${this.rotZ}deg) rotateY(${this.rotY}deg)`);
     this.element.appendChild(perspective);
     return perspective;
   }
@@ -49,22 +50,28 @@ export default class BlockRender {
   changeAngle(e) {
     switch (e.keyCode) {
       case 38:
-        this.rotation += 5;
+        this.rotX += 5;
         break;
       case 40:
-        this.rotation -= 5;
+        this.rotX -= 5;
         break;
       case 37:
-        this.angle += 5;
+        this.rotZ += 5;
         break;
       case 39:
-        this.angle -= 5;
+        this.rotZ -= 5;
+        break;
+      case 65:
+        this.rotY += 5;
+        break;
+      case 68:
+        this.rotY -= 5;
         break;
       default:
         break;
     }
     document.getElementById('perspective').setAttribute('style',
-      `transform: rotateX(${this.rotation}deg) rotateZ(${this.angle}deg)`);
+      `transform: rotateX(${this.rotX}deg) rotateZ(${this.rotZ}deg) rotateY(${this.rotY}deg)`);
   }
 
   generateMessage() {
@@ -89,7 +96,8 @@ export default class BlockRender {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
             myIndex ++;
-            const block = new Block(myIndex, this.perspective, BlockStyle, currentX - (x * size), (y * size));
+            const block = new Block(myIndex, this.perspective,
+                BlockStyle, currentX - (x * size), (y * size), 0, y);
             this.blocks.push(block);
           }
           counter ++;
@@ -104,14 +112,14 @@ export default class BlockRender {
     for (let r = 0; r < this.cache.length; r++) {
       const holder = getChar(this.cache[r]);
       this.time += 0.2;
-      const cosProp = 25 * Math.sin(((r * 20) + this.time) * Math.PI / 180);
-      const sinProp = 25 * Math.cos(((r * 20) + this.time) * Math.PI / 180);
+      const cosProp = 55 * Math.sin(((r * 20) + this.time) * Math.PI / 180);
+      const sinProp = 55 * Math.cos(((r * 20) + this.time) * Math.PI / 180);
       let counter = 0;
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
             const block = this.blocks[myIndex];
-            block.updateCube(0, sinProp, cosProp);
+            block.updateCube(sinProp, 0, cosProp);
             myIndex ++;
           }
           counter ++;

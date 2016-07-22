@@ -2,7 +2,7 @@ html {
   height: 100%;
 }
 body {
-  background: #023854; /* #98a5b5; */
+  background: #483628; /* #98a5b5; */
   font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
   font-size: 16px;
   overflow: hidden;
@@ -35,7 +35,7 @@ body > * {
   z-index: 100;
 }
 .textinput{
-  background: #0c2e56;
+  background: #483628;
   border: 1px solid #FFF;
   border-radius: 6px;
   color: #FFF;
