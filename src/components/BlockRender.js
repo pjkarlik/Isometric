@@ -75,6 +75,7 @@ export default class BlockRender {
   }
 
   generateMessage() {
+    this.time = 0;
     const message = this.message.split('').reverse();
     this.cache = message;
     const parent = document.getElementById('perspective');
@@ -109,17 +110,21 @@ export default class BlockRender {
 
   renderLoop() {
     let myIndex = 0;
+    const amp = 50;
+    const space = parseInt(BlockStyle.size, 10);
+    const amount = ((2 * Math.PI) / this.cache.length) * 0.1;
+
     for (let r = 0; r < this.cache.length; r++) {
       const holder = getChar(this.cache[r]);
-      this.time += 0.2;
-      const cosProp = 55 * Math.sin(((r * 20) + this.time) * Math.PI / 180);
-      const sinProp = 55 * Math.cos(((r * 20) + this.time) * Math.PI / 180);
+      this.time += amount;
+      const cosProp = amp * Math.sin(((r * space) + this.time) * Math.PI / 180);
+      const sinProp = amp * Math.cos(((r * space) + this.time) * Math.PI / 180);
       let counter = 0;
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
             const block = this.blocks[myIndex];
-            block.updateCube(sinProp, 0, cosProp);
+            block.updateCube(sinProp, cosProp, 0);
             myIndex ++;
           }
           counter ++;
