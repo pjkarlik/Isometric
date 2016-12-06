@@ -1,4 +1,4 @@
-import Cube from './Cubic';
+import Cube from './Cube';
 import CubeStyle from './Cube2.less';
 
 /** Parent Render Class */
