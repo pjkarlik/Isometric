@@ -1,76 +1,128 @@
+"use strict";
+const fs = require("fs");
+const path = require("path");
+const pkgInfo = require("./package.json");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const path = require('path');
-const pkgInfo = require('./package.json');
-const { name, version, description } = pkgInfo;
-const fs = require('fs');
-fs.writeFileSync('version.json', JSON.stringify({ name, version, description }));
+const DEV_PORT = 2020;
+const { name, version, description, repository } = pkgInfo;
+const { url } = repository;
+
+fs.writeFileSync(
+  "version.json",
+  JSON.stringify({ name, version, description, url })
+);
 
 const config = {
-  name: 'Isometric',
-  target: 'web',
+  name: "Isometric",
+  target: "web",
   devServer: {
-    host: '0.0.0.0',
-    historyApiFallback: true,
+    disableHostCheck: true,
+    host: "0.0.0.0",
+    port: DEV_PORT,
+    historyApiFallback: true
   },
-  devtool: 'source-map',
+  mode: "development",
+  devtool: "source-map",
   output: {
-    path: path.join(__dirname, 'dist/'),
-    filename: 'index.js',
-    libraryTarget: 'umd',
+    path: path.join(__dirname, "dist/"),
+    filename: "[name].js",
+    chunkFilename: "[id].js",
+    libraryTarget: "umd"
   },
-  entry: './src/index.js',
+  entry: {
+    main: "./src/index.js",
+    vendor: ["babel-polyfill"]
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel',
-        include: [/src/],
-        exclude: /node_modules/,
+        include: [/src/, /resources/],
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              cacheDirectory: true
+            }
+          }
+        ]
       },
       {
-        test: /\.(css)$/,
-        loader: 'style!css',
-        include: [/resources/],
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       },
       {
-        extractTextPlugin: true,
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader',
-        'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!less',
-        { publicPath: '../' }),
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: "[name]__[local]___[hash:base64:5]"
+            }
+          },
+          {
+            loader: "less-loader"
+          }
+        ]
       },
       {
-        test: /\.(png|jpg)$/,
-        loader: 'file',
+        test: /\.(png|gif|cur|jpg)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name]__[hash:base64:5].[ext]"
+            }
+          },
+          {
+            loader: "image-webpack-loader",
+            options: {
+              bypassOnDebug: true,
+              optipng: {
+                optimizationLevel: 7
+              },
+              gifsicle: {
+                interlaced: false
+              }
+            }
+          }
+        ]
       },
       {
-        test: /\.(wav)$/,
-        loader: 'file',
-      },
-      {
-        test: /\.json$/,
-        loader: 'json',
-      },
-    ],
-    preLoaders: [
-      { test: /\.js$/,
-        loader: 'eslint-loader',
-      },
-    ],
+        test: /\.js$/,
+        enforce: "pre",
+        use: [
+          {
+            loader: "eslint-loader",
+            options: {
+              failOnError: true
+            }
+          }
+        ]
+      }
+    ]
   },
   plugins: [
-    new ExtractTextPlugin('style/style.css', { allChunks: true }),
-    new HtmlWebpackPlugin({
-      css: 'styles/styles.css',
-      title: 'Isometrics',
-      favicon: './resources/images/favicon.png',
-      template: './resources/templates/template.ejs',
-      inject: 'body',
-      hash: true,
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+      allChunks: true
     }),
-  ],
+    new HtmlWebpackPlugin({
+      css: "styles/styles.css",
+      title: "Isometric",
+      favicon: "./resources/images/favicon.png",
+      template: "./resources/templates/template.ejs",
+      inject: "body",
+      hash: true
+    })
+  ]
 };
 
 module.exports = config;

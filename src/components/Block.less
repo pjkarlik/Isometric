@@ -1,13 +1,13 @@
-@size: 15px;
+@size: 20px;
 @color1: #cb071f;
-@color2: #e28015;
-@color3: #f1cb28;
-@color4: #5f9825;
-@color5: #3c7f90;
+@color2: #cb6c07;
+@color3: #f19028;
+@color4: #feb600;
+@color5: #f5d103;
 .cube,
 .cube:after,
 .cube:before {
-  content: '';
+  content: "";
   height: @size;
   position: absolute;
   width: @size;
@@ -18,7 +18,6 @@
 .cube:after {
   transform: rotateX(-90deg) translateY(@size);
   transform-origin: 100% 100%;
-
 }
 .cube:before {
   transform: rotateY(90deg) translateX(@size);
@@ -28,7 +27,7 @@
 .back,
 .back:after,
 .back:before {
-  content: '';
+  content: "";
   height: @size;
   position: absolute;
   width: @size;
@@ -45,94 +44,94 @@
   transform: rotateY(90deg) translateX(@size);
   transform-origin: 100% 0;
 }
-.c4{
+.c4 {
   background-color: @color1;
-  &:before{
+  &:before {
     background-color: lighten(@color1, 10%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color1, 20%);
   }
 }
-.c3{
+.c3 {
   background-color: @color2;
-  &:before{
+  &:before {
     background-color: lighten(@color2, 10%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color2, 20%);
   }
 }
-.c2{
+.c2 {
   background-color: @color3;
-  &:before{
+  &:before {
     background-color: lighten(@color3, 10%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color3, 20%);
   }
 }
-.c1{
+.c1 {
   background-color: @color4;
-  &:before{
+  &:before {
     background-color: lighten(@color4, 10%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color4, 20%);
   }
 }
-.c0{
+.c0 {
   background-color: @color5;
-  &:before{
+  &:before {
     background-color: lighten(@color5, 10%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color5, 20%);
   }
 }
 
-.b4{
+.b4 {
   background-color: darken(@color1, 10%);
-  &:before{
+  &:before {
     background-color: darken(@color1, 40%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color1, 30%);
   }
 }
-.b3{
+.b3 {
   background-color: darken(@color2, 10%);
-  &:before{
+  &:before {
     background-color: darken(@color2, 40%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color2, 30%);
   }
 }
-.b2{
+.b2 {
   background-color: darken(@color3, 10%);
-  &:before{
+  &:before {
     background-color: darken(@color3, 40%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color3, 30%);
   }
 }
-.b1{
+.b1 {
   background-color: darken(@color4, 10%);
-  &:before{
+  &:before {
     background-color: darken(@color4, 40%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color4, 30%);
   }
 }
-.b0{
+.b0 {
   background-color: darken(@color5, 10%);
-  &:before{
+  &:before {
     background-color: darken(@color5, 40%);
   }
-  &:after{
+  &:after {
     background-color: darken(@color5, 30%);
   }
 }

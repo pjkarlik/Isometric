@@ -54,6 +54,7 @@ body > * {
   position: absolute;
   transform-style: preserve-3d;
   transition: 100ms;
+  transform-origin: 50% 50%;
 }
 .perspective {
   left: 50%;

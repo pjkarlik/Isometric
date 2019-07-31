@@ -1,15 +1,15 @@
 @size: 30px;
-@colorTop: #3f8e27;
-@colorRight: #8e5927;
-@colorLeft: #50130f;
-@colorBottom: #16400a;
+@colorTop: #0eb86e;
+@colorRight: #a56a04;
+@colorLeft: #bf9b0a;
 .cube,
 .cube:after,
 .cube:before {
-  content: '';
+  content: "";
   height: @size;
   position: absolute;
   width: @size;
+  backface-visibility: hidden;
 }
 .cube {
   background-color: @colorTop;
@@ -26,29 +26,30 @@
   transform-origin: 100% 0;
 }
 
-.cubeBack,
-.cubeBack:after,
-.cubeBack:before {
-  content: '';
+.back,
+.back:after,
+.back:before {
+  content: "";
   height: @size;
   position: absolute;
   width: @size;
 }
-.cubeBack {
-  background-color: @colorBottom;
+.back {
+  background-color: darken(@colorTop, 20%);
   transform-style: preserve-3d;
   transform: rotateX(-180deg) rotateZ(90deg) translateZ(@size);
 }
-.cubeBack:after {
-  background-color: darken(@colorRight, 10%);
+.back:after {
+  background-color: darken(@colorRight, 20%);
   transform: rotateX(-90deg) translateY(@size);
   transform-origin: 100% 100%;
 }
-.cubeBack:before {
-  background-color: darken(@colorLeft, 10%);
+.back:before {
+  background-color: darken(@colorLeft, 20%);
   transform: rotateY(90deg) translateX(@size);
   transform-origin: 100% 0;
 }
+
 :export {
   size: @size;
 }

@@ -1,6 +1,6 @@
-import Block from './Block';
-import BlockStyle from './Block.less';
-import getChar from './Alphabet';
+import Block from "./Block";
+import BlockStyle from "./Block.less";
+import getChar from "./Alphabet";
 
 /** Parent Render Class */
 export default class BlockRender {
@@ -9,44 +9,67 @@ export default class BlockRender {
     this.height = 5;
     this.rows = 5;
     this.cols = 5;
-    this.rotX = 65;
+    this.rotX = 95;
     this.rotY = 0;
-    this.rotZ = 115;
+    this.rotZ = 70;
     this.time = 0;
     this.blocks = [];
-    this.cache = '';
+    this.cache = "";
     this.element = element;
-    this.message = 'nucleus';
+    this.message = "albert";
     this.perspective = this.createPerspective();
 
     this.changeAngle = this.changeAngle.bind(this);
+    this.moveSpace = this.moveSpace.bind(this);
     this.updatemessage = this.updatemessage.bind(this);
     this.generateMessage = this.generateMessage.bind(this);
     this.renderLoop = this.renderLoop.bind(this);
-    document.addEventListener('keydown', this.changeAngle, false);
+    document.addEventListener("keydown", this.changeAngle, false);
     this.generateMessage();
   }
 
   createPerspective() {
-    const textinput = document.createElement('input');
-    textinput.className = 'textinput';
-    textinput.id = 'textinput';
+    const textinput = document.createElement("input");
+    textinput.className = "textinput";
+    textinput.id = "textinput";
     textinput.value = this.message;
-    textinput.addEventListener('change', () => { this.updatemessage(); }, false);
+    textinput.addEventListener(
+      "change",
+      () => {
+        this.updatemessage();
+      },
+      false
+    );
     this.element.appendChild(textinput);
-    const perspective = document.createElement('div');
-    perspective.className = 'perspective';
-    perspective.id = 'perspective';
-    perspective.setAttribute('style',
-      `transform: rotateX(${this.rotX}deg) rotateZ(${this.rotZ}deg) rotateY(${this.rotY}deg)`);
+    const perspective = document.createElement("div");
+    perspective.className = "perspective";
+    perspective.id = "perspective";
+    perspective.setAttribute(
+      "style",
+      `transform: rotateX(${this.rotX}deg) rotateZ(${this.rotZ}deg) rotateY(${
+        this.rotY
+      }deg)`
+    );
     this.element.appendChild(perspective);
     return perspective;
   }
   updatemessage() {
     window.cancelAnimationFrame(this.renderLoop);
-    this.message = document.getElementById('textinput').value;
+    this.message = document.getElementById("textinput").value;
     this.generateMessage();
   }
+
+  moveSpace() {
+    document
+      .getElementById("perspective")
+      .setAttribute(
+        "style",
+        `transform: rotateX(${this.rotX}deg) rotateZ(${this.rotZ}deg) rotateY(${
+          this.rotY
+        }deg)`
+      );
+  }
+
   changeAngle(e) {
     switch (e.keyCode) {
       case 38:
@@ -70,15 +93,14 @@ export default class BlockRender {
       default:
         break;
     }
-    document.getElementById('perspective').setAttribute('style',
-      `transform: rotateX(${this.rotX}deg) rotateZ(${this.rotZ}deg) rotateY(${this.rotY}deg)`);
+    this.moveSpace();
   }
 
   generateMessage() {
     this.time = 0;
-    const message = this.message.split('').reverse();
+    const message = this.message.split("").reverse();
     this.cache = message;
-    const parent = document.getElementById('perspective');
+    const parent = document.getElementById("perspective");
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
     }
@@ -87,21 +109,28 @@ export default class BlockRender {
     let myIndex = 0;
     const size = parseInt(BlockStyle.size, 10);
     // Get half the size of the message to center text //
-    const offset = (size * 5) * message.length / 2;
+    const offset = (size * 5 * message.length) / 2;
     for (let r = 0; r < message.length; r++) {
       holder = getChar(message[r]);
       // Current X for position of Character in message. size * 6 = rows + 1 //
-      const currentX = -offset + (size * 6) * r;
+      const currentX = -offset + size * 6 * r;
       let counter = 0;
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
-            myIndex ++;
-            const block = new Block(myIndex, this.perspective,
-                BlockStyle, currentX - (x * size), (y * size), 0, y);
+            myIndex++;
+            const block = new Block(
+              myIndex,
+              this.perspective,
+              BlockStyle,
+              currentX - x * size,
+              y * size,
+              0,
+              y
+            );
             this.blocks.push(block);
           }
-          counter ++;
+          counter++;
         }
       }
     }
@@ -110,24 +139,25 @@ export default class BlockRender {
 
   renderLoop() {
     let myIndex = 0;
-    const amp = 50;
+    const amp = 30;
     const space = parseInt(BlockStyle.size, 10);
-    const amount = ((2 * Math.PI) / this.cache.length) * 0.1;
-
+    const amount = ((3 * Math.PI) / this.cache.length) * 0.1;
+    // this.rotZ += 0.2;
+    // this.moveSpace();
     for (let r = 0; r < this.cache.length; r++) {
       const holder = getChar(this.cache[r]);
       this.time += amount;
-      const cosProp = amp * Math.sin(((r * space) + this.time) * Math.PI / 180);
-      const sinProp = amp * Math.cos(((r * space) + this.time) * Math.PI / 180);
+      const cosProp = amp * Math.sin(((r * 125 + this.time) * Math.PI) / 180);
+      const sinProp = amp * Math.cos(((r * 135 + this.time) * Math.PI) / 180);
       let counter = 0;
       for (let y = 0; y < this.rows; y++) {
         for (let x = 0; x < this.cols; x++) {
           if (holder[counter] === 1) {
             const block = this.blocks[myIndex];
-            block.updateCube(sinProp, cosProp, 0);
-            myIndex ++;
+            block.updateCube(sinProp, 0, cosProp);
+            myIndex++;
           }
-          counter ++;
+          counter++;
         }
       }
     }
