@@ -44,6 +44,7 @@
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.5.0",
+    "style-loader": "~0.23.1",
     "url-loader": "^0.5.7",
     "webpack": "^4.10.2",
     "webpack-cli": "^3.0.1",

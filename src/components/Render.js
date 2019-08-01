@@ -5,8 +5,8 @@ import simplexNoise, { fastfloor } from "./simplexNoise";
 /** Parent Render Class */
 export default class Render {
   constructor(element) {
-    this.grid = 12;
-    this.dec = 15;
+    this.grid = 10;
+    this.dec = 5.5;
     this.rows = this.grid;
     this.cols = this.grid;
     this.z = Math.abs(this.grid / 4);
@@ -86,7 +86,7 @@ export default class Render {
   renderLoop() {
     // Loop though Simplex Noise //
     let counter = 0;
-    const size = parseInt(this.style.size, 10) / 2;
+    const size = parseInt(this.style.size, 10);
     this.time += 0.02;
     for (let r = 0; r < this.z; r++) {
       for (let y = 0; y < this.rows; y++) {
@@ -95,9 +95,16 @@ export default class Render {
           const thisX = x / this.dec;
           const thisY = y / this.dec;
           const thisZ = r / this.dec;
-          const noise = simplexNoise(thisX, thisY, thisZ + this.time);
-          const myOpacity = fastfloor(255 * noise);
-          cube.updateCube(x * size, y * size, r * size, myOpacity);
+          const noise = simplexNoise(thisX, thisY, thisZ + this.time) * 2;
+          const scale = Math.abs(noise);
+          const opacity = fastfloor(255 * noise);
+          cube.updateCube(
+            x * size,
+            y * size,
+            r * size,
+            opacity,
+            scale > 0.75 ? 1 : scale
+          );
           counter++;
         }
       }
