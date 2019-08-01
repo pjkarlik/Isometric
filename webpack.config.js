@@ -51,7 +51,7 @@ const config = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ["css-loader"]
       },
       {
         test: /\.less$/,
